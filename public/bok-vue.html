@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue - Introduktion</title>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="book in books">{{ book.bokTitel }} {{ book.bokForfattare }}</li>
+    </ul>
+
+</div>
+
+<script src="https://unpkg.com/vue@3"></script>
+
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            msg: 'Mina böcker:',
+            books: []
+        }
+    },
+    mounted(){
+        fetch('http://localhost:3000/api/books')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                this.books = data.bok;
+            });
+    }
+}).mount('#app')
+</script>
+
+</body>
+</html>
